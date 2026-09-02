@@ -1,0 +1,84 @@
+{
+  "name": "qg14-cardclash",
+  "version": "1.0.0",
+  "description": "QG14 CARDCLASH - Web + Windows desktop build",
+  "main": "electron-main.js",
+  "scripts": {
+    "start": "node index.js",
+    "desktop": "electron .",
+    "build:win": "electron-builder --win nsis",
+    "build:portable": "electron-builder --win portable",
+    "desktop:check": "node scripts/desktop-check.js"
+  },
+  "keywords": [
+    "qg14",
+    "cardclash"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^22.13.11",
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "firebase-admin": "^13.0.0",
+    "helmet": "^8.1.0",
+    "node-fetch": "^2.7.0",
+    "socket.io": "^4.8.1",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "electron": "^44.0.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.qg14.cardclash",
+    "productName": "QG14 CARDCLASH",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron-main.js",
+      "index.js",
+      "firebase-config.js",
+      "firebase-service.js",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "public",
+        "to": "public",
+        "filter": [
+          "**/*",
+          "!images/normal/**/*",
+          "!images/legendary/**/*",
+          "!images/fullscreen/**/*",
+          "!anime/images/normal/**/*",
+          "!anime/images/legendary/**/*",
+          "!anime/images/fullscreen/**/*"
+        ]
+      },
+      {
+        "from": "abilities.json",
+        "to": "defaults/abilities.json"
+      },
+      {
+        "from": "leaderboard.json",
+        "to": "defaults/leaderboard.json"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "QG14-CARDCLASH-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "QG14 CARDCLASH"
+    }
+  }
+}
